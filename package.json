@@ -1,0 +1,27 @@
+{
+  "name": "aws-lambda-nodejs-baseline",
+  "version": "1.0.0",
+  "description": "This is a AWS Lambda Node.js template, to start a empty lambda project.",
+  "main": "index.js",
+  "homepage": "https://github.com/COVID-19-PROJECT/aws-lambda-nodejs-baseline",
+  "scripts": {
+    "coverage": "nyc mocha",
+    "coverage:open": "open ./coverage/lcov-report/index.html",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "pretest": "npm run lint",
+    "reinstall": "rm -Rf node_modules && npm install",
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.0"
+  }
+}
