@@ -2,7 +2,7 @@
 
 This project it´s a template to start working with AWS Lambdas with Node.js. The project has all the need configuration to work with COVID-19-GT project.
 
-## Usage
+## Usage
 
 When you want to create a new AWS Lambda with Node.js for the COVID-19-GT, you need to clone this repository and set the name for the new Lambda:
 
@@ -14,13 +14,13 @@ Then you can open then project and start coding. Is important to remember you ne
 
 ## Contributing
 
-### 1. Clone this repository
+### 1. Clone this repository
 
 ```bash
 $ git clone https://github.com/COVID-19-PROJECT/aws-lambda-nodejs-baseline.git
 ```
 
-### Enable git-flow in the project
+### Enable git-flow in the project
 ```bash
 $ cd aws-lambda-nodejs-baseline
 $ git flow init -d
