@@ -1,4 +1,5 @@
 {
   "bail": true,
-  "recursive": true
+  "recursive": true,
+  "timeout": 55000
 }
