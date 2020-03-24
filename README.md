@@ -1,28 +1,26 @@
-# aws-lambda-nodejs-baseline
+# extract-data-csv-lambda
 
-This project it´s a template to start working with AWS Lambdas with Node.js. The project has all the need configuration to work with COVID-19-GT project.
+This project is a AWS Lambda function with Node.js that make the job to extract the data from [CSSEGISandData /COVID-19 - repository](https://github.com/CSSEGISandData/COVID-19). Internal the lambda make a request to GitHub raw server to extract the plain text CSV in date, then format the response and upload a new *.json file to S3 Bucket.
 
 ## Usage
 
-When you want to create a new AWS Lambda with Node.js for the COVID-19-GT, you need to clone this repository and set the name for the new Lambda:
+This AWS Lambda only need to be deployed in AWS environment and require you send the next payload:
 
-```bash
-$ git clone https://github.com/COVID-19-PROJECT/aws-lambda-nodejs-baseline.git <New Lambda>
-```
+* **baseURL:** the url from the GitHub Raw server.
 
-Then you can open then project and start coding. Is important to remember you need to add test for your code (you can see examples), you need to have 100% coverage for the project.
+Important to know, this lambda take the current date, to extract the daily file created by CSSEGISandData Repository. So, for this reason, the lambda need to be calle with a Schedule Job, to repeate every day the Job tu extract and upload new information.
 
 ## Contributing
 
 ### 1. Clone this repository
 
 ```bash
-$ git clone https://github.com/COVID-19-PROJECT/aws-lambda-nodejs-baseline.git
+$ git clone https://github.com/COVID-19-PROJECT/extract-data-csv-lambda.git
 ```
 
 ### Enable git-flow in the project
 ```bash
-$ cd aws-lambda-nodejs-baseline
+$ cd extract-data-csv-lambda
 $ git flow init -d
 ```
 
@@ -31,7 +29,7 @@ $ git flow init -d
 Go to the folder where the project was clone and run `npm install` or `npm i`
 
 ```bash
-$ cd aws-lambda-nodejs-baseline
+$ cd extract-data-csv-lambda
 $ npm install
 ```
 
