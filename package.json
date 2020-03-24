@@ -1,9 +1,9 @@
 {
-  "name": "aws-lambda-nodejs-baseline",
+  "name": "extract-data-csv-lambda",
   "version": "1.0.0",
-  "description": "This is a AWS Lambda Node.js template, to start a empty lambda project.",
+  "description": "This is a AWS lambda with Node.js that extract and load COVID-19 data.",
   "main": "index.js",
-  "homepage": "https://github.com/COVID-19-PROJECT/aws-lambda-nodejs-baseline",
+  "homepage": "https://github.com/COVID-19-PROJECT/extract-data-csv-lambda",
   "scripts": {
     "coverage": "nyc mocha",
     "coverage:open": "open ./coverage/lcov-report/index.html",
