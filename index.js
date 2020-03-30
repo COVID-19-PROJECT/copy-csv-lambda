@@ -4,6 +4,7 @@ const parseCSVData = require('./lib/parse-csv-data');
 const uploadJSONFile = require('./lib/upload-json-file');
 
 module.exports.handler = async (event) => {
+  const filename = getCSVFilename();
   try {
     const { baseURL } = event;
 
@@ -11,11 +12,10 @@ module.exports.handler = async (event) => {
       throw new Error('You need to define baseURL in the payload');
     }
 
-    const filename = getCSVFilename();
     const csvUrl = `${baseURL}/${filename}`;
     const data = await downloadCSVFile(csvUrl);
     const parse = await parseCSVData(data);
-    const response = await uploadJSONFile(filename, parse);
+    const response = await uploadJSONFile(parse);
 
     return Promise.resolve({
       tag: response.ETag,
@@ -23,6 +23,9 @@ module.exports.handler = async (event) => {
       message: 'Copy CSV work finish succesfully',
     });
   } catch (error) {
+    if (error.message === 'Not Found') {
+      return Promise.resolve(`Not found file ${filename}`);
+    }
     return Promise.reject(error);
   }
 };

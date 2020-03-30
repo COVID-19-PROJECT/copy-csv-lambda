@@ -14,48 +14,77 @@ const lambda = proxyquire('../index', {
 const baseURL = 'https://fake.api.com';
 
 describe('Lambda Function', () => {
-  let csvResponse;
-  let clock;
+  describe('When the handler is called', () => {
+    let csvResponse;
+    let clock;
 
-  before(() => {
-    csvResponse = readFileSync(path.join(__dirname, './fixtures/info.csv')).toString('utf8');
-  });
+    before(() => {
+      csvResponse = readFileSync(path.join(__dirname, './fixtures/info.csv')).toString('utf8');
+    });
 
 
-  beforeEach(() => {
-    clock = useFakeTimers(new Date(2020, 2, 1).getTime());
+    beforeEach(() => {
+      clock = useFakeTimers(new Date(2020, 2, 1).getTime());
 
-    nock(baseURL)
-      .get('/03-01-2020.csv')
-      .reply(200, csvResponse);
-  });
+      nock(baseURL)
+        .get('/03-01-2020.csv')
+        .reply(200, csvResponse);
+    });
 
-  afterEach(() => {
-    clock.restore();
-  });
+    afterEach(() => {
+      clock.restore();
+    });
 
-  describe('When the handler is called without arguments', () => {
-    it('should return a error with message', async () => {
-      try {
-        await lambda.handler({});
+    describe('When the handler is called without arguments', () => {
+      it('should return a error with message', async () => {
+        try {
+          await lambda.handler({});
 
-        expect.fail('This scenario no need to pass');
-      } catch (error) {
-        expect(error.message).to.match(/You need to define baseURL in the payload/);
-      }
+          expect.fail('This scenario no need to pass');
+        } catch (error) {
+          expect(error.message).to.match(/You need to define baseURL in the payload/);
+        }
+      });
+    });
+
+    describe('When the handler is called with baseURL argument', () => {
+      it('should return a ok result', async () => {
+        try {
+          const response = await lambda.handler({ baseURL });
+
+          expect(response.worked).to.be.equal(3);
+          expect(response.message).to.match(/Copy CSV work finish succesfully/);
+        } catch (error) {
+          expect.fail('We found and error when not be necessary');
+        }
+      });
     });
   });
 
-  describe('When the handler is called with baseURL argument', () => {
-    it('should return a ok result', async () => {
-      try {
-        const response = await lambda.handler({ baseURL });
+  describe('When the handler is called and the file not found', () => {
+    let clock;
 
-        expect(response.worked).to.be.equal(3);
-        expect(response.message).to.match(/Copy CSV work finish succesfully/);
-      } catch (error) {
-        expect.fail('We found and error when not be necessary');
-      }
+    beforeEach(() => {
+      clock = useFakeTimers(new Date(2020, 3, 1).getTime());
+
+      nock(baseURL)
+        .get('/04-01-2020.csv')
+        .reply(404);
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    describe('When the handler is called and get Not Found', () => {
+      it('should return a message with File Not Found', async () => {
+        try {
+          const response = await lambda.handler({ baseURL });
+          expect(response).to.match(/Not found file 04-01-2020.csv/);
+        } catch (error) {
+          expect.fail('We found and error when not be necessary');
+        }
+      });
     });
   });
 });

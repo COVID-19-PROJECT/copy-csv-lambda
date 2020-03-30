@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Extract CSV Data Lambda
+Resources:
+  ExtractCSVDataLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: extract-data-csv-lambda
+      Handler: index.handler
+      Runtime: nodejs12.x
+      Timeout: 120
+      CodeUri: s3://codiv19-code-sam/f72a8c49ce871238a5a30f8834997fe8
+      Policies:
+      - AmazonS3FullAccess
